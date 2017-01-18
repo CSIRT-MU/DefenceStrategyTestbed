@@ -1,0 +1,83 @@
+{
+  "db": "dbname='<dbname>' user='<user>' host='<host>' password='<password>'",
+  "costs": {
+    "reconfiguration": 10,
+    "availability": [
+      {
+        "ip": "x.x.x.2",
+        "value": 1
+      },
+      {
+        "ip": "x.x.x.3",
+        "value": 0
+      },
+      {
+        "ip": "x.x.x.4",
+        "value": 10
+      },
+      {
+        "ip": "x.x.x.5",
+        "value": 2
+      },
+      {
+        "ip": "x.x.x.6",
+        "value": 5
+      }
+    ],
+    "integrity": [
+      {
+        "ip": "x.x.x.2",
+        "value": 500
+      },
+      {
+        "ip": "x.x.x.3",
+        "value": 500
+      },
+      {
+        "ip": "x.x.x.4",
+        "value": 2000
+      },
+      {
+        "ip": "x.x.x.5",
+        "value": 3000
+      },
+      {
+        "ip": "x.x.x.6",
+        "value": 4000
+      }
+    ],
+  },
+  "honeypots": [
+    {
+      "ip": "x.x.x.2",
+      "dns": "test",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "ip": "x.x.x.3",
+      "dns": "",
+      "username": "root",
+      "password": "raspberry"
+    },
+    {
+      "ip": "x.x.x.4",
+      "dns": "www",
+      "username": "root",
+      "password": "123123"
+    },
+    {
+      "ip": "x.x.x.5",
+      "dns": "mail",
+      "username": "admin",
+      "password": "admin"
+    },
+    {
+      "ip": "x.x.x.6",
+      "dns": "db",
+      "username": "root",
+      "password": "password1"
+    }
+  ],
+  "success_probability":  0.4
+}
