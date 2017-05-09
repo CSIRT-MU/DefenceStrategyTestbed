@@ -1,79 +1,80 @@
 {
-  "db": "dbname='<dbname>' user='<user>' host='<host>' password='<password>'",
+  "db-username": "cowrie",
+  "db-password": "!M2017Database",
   "costs": {
     "reconfiguration": 10,
     "availability": [
       {
-        "ip": "x.x.x.2",
+        "ip": "10.0.0.11",
         "value": 1
       },
       {
-        "ip": "x.x.x.3",
+        "ip": "10.0.0.12",
         "value": 0
       },
       {
-        "ip": "x.x.x.4",
+        "ip": "10.0.0.13",
         "value": 10
       },
       {
-        "ip": "x.x.x.5",
+        "ip": "10.0.0.14",
         "value": 2
       },
       {
-        "ip": "x.x.x.6",
+        "ip": "10.0.0.15",
         "value": 5
       }
     ],
     "integrity": [
       {
-        "ip": "x.x.x.2",
+        "ip": "10.0.0.11",
         "value": 500
       },
       {
-        "ip": "x.x.x.3",
+        "ip": "10.0.0.12",
         "value": 500
       },
       {
-        "ip": "x.x.x.4",
+        "ip": "10.0.0.13",
         "value": 2000
       },
       {
-        "ip": "x.x.x.5",
+        "ip": "10.0.0.14",
         "value": 3000
       },
       {
-        "ip": "x.x.x.6",
+        "ip": "10.0.0.14",
         "value": 4000
       }
-    ],
+    ]
   },
   "honeypots": [
     {
-      "ip": "x.x.x.2",
+      "ip": "10.0.0.11",
       "dns": "test",
       "username": "admin",
       "password": "password"
     },
     {
-      "ip": "x.x.x.3",
+      "ip": "10.0.0.12",
       "dns": "",
       "username": "root",
       "password": "raspberry"
     },
     {
-      "ip": "x.x.x.4",
+      "ip": "10.0.0.13",
       "dns": "www",
       "username": "root",
       "password": "123123"
     },
     {
-      "ip": "x.x.x.5",
+      "ip": "10.0.0.14",
       "dns": "mail",
       "username": "admin",
       "password": "admin"
     },
     {
-      "ip": "x.x.x.6",
+      "ip": "10.0.0.15",
       "dns": "db",
       "username": "root",
       "password": "password1"

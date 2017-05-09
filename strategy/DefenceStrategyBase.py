@@ -1,12 +1,14 @@
 import os
 from datetime import datetime
 import iptc
-import path
+import os.path
+import os
 import json
 
 class DefenceStrategyBase:
     def __init__(self, dir):
-        self.configuration = json.loads(open('configuration.json', 'r').read())
+	base_path = os.path.join(dir, os.pardir, os.pardir)
+	self.configuration = json.loads(open(os.path.join(base_path, 'configuration.json'), 'r').read())
         self.dir = dir
     
     def get_configuration(self):
@@ -15,12 +17,19 @@ class DefenceStrategyBase:
     def get_firewall_state(self, srcip):
         state = {}
         chain = iptc.Chain(iptc.Table(iptc.Table.FILTER), "INPUT")
-        for target in self.configuration.honeypots:
-                if any(srcip in r.src and target.ip in r.dst for r in chain.rules):
-                        state[target.ip] = 'blocked'
+        for target in self.configuration["honeypots"]:
+                if any(srcip in r.src and target["ip"] in r.dst for r in chain.rules):
+                        state[target["ip"]] = 'blocked'
                 else:
-                        state[target.ip] = 'allowed'
+                        state[target["ip"]] = 'allowed'
         return state
+	 
+    def get_all_active_blocks(self):
+       	chain = iptc.Chain(iptc.Table(iptc.Table.FILTER), "INPUT")
+       	honeypots = [h["ip"] for h in self.configuration["honeypots"]]
+        rules = [[r.src, r.dst] for r in chain.rules if any(r.dst.startswith(h) for h in honeypots)]
+     	return rules
+
 
     def unblock(self, srcip, dstip):
         rule = iptc.Rule()
@@ -29,8 +38,8 @@ class DefenceStrategyBase:
         rule.target = iptc.Target(rule, "DROP")
         chain = iptc.Chain(iptc.Table(iptc.Table.FILTER), "INPUT")
         chain.delete_rule(rule)
-        with open(path.join(self.dir, 'log'), 'a') as log:
-            log.write(json.dumps([srcip, dstip, datetime.utcnow().isoformat(), "allow"]))
+        with open(os.path.join(self.dir, 'log'), 'a') as log:
+            log.write(json.dumps([srcip, dstip, datetime.utcnow().isoformat(), "allow"]) + '\n')
 
 
     def block(self, srcip, dstip):
@@ -40,7 +49,7 @@ class DefenceStrategyBase:
         rule.target = iptc.Target(rule, "DROP")
         chain = iptc.Chain(iptc.Table(iptc.Table.FILTER), "INPUT")
         chain.insert_rule(rule)
-        with open(path.join(self.dir, 'log'), 'a') as log:
-            log.write(json.dumps([srcip, dstip, datetime.utcnow().isoformat(), "block"]))
+        with open(os.path.join(self.dir, 'log'), 'a') as log:
+            log.write(json.dumps([srcip, dstip, datetime.utcnow().isoformat(), "block"]) + '\n')
 
    

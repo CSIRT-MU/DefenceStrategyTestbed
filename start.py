@@ -13,16 +13,17 @@ if not os.path.exists(path):
     os.makedirs(path)
 
 #copy and rename logic implementation
-copyfile(logic_implementation, os.path.join('strategy', 'DefenceStrategyImplementation.py'))
-copyfile(logic_implementation, path)
+shutil.copyfile(logic_implementation, os.path.join('strategy', 'DefenceStrategyImplementation.py'))
+shutil.copyfile(logic_implementation, os.path.join(path, 'DefenceStrategyImplementation.py'))
 
 #create Cron job
-cron = CronTab(user=True, comment='strategy evaluation')
-command = 'python {0}/respond.py {1}'.format(os.path.abspath(), path)
-job  = cron.new(command=command)
+cron = CronTab(user=True)
+command = 'python {0}/respond.py {1}/{2} >> {3}/debug 2>&1'.format(os.path.dirname(os.path.realpath(__file__)), os.path.dirname(os.path.realpath(__file__)), path, os.path.dirname(os.path.realpath(__file__)))
+job  = cron.new(command=command, comment='strategy evaluation')
 job.minute.every(1)
 job.enable()
+cron.write_to_user(user=True)
 
 #note beginning
-with open(path.join(path, 'info'), 'w+') as info:
-    info.write(json.dumps({start: datetime.now().isoformat()}))
+with open(os.path.join(path, 'info'), 'w+') as info:
+    info.write(json.dumps({"start": datetime.utcnow().isoformat()}))
